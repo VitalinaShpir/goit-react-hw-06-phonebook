@@ -1,11 +1,14 @@
-import PropTypes from 'prop-types';
+import { getFilter } from 'redux/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilter } from 'redux/filterSlice';
 import { BsFillSearchHeartFill } from 'react-icons/bs';
 import css from './Filter.module.css';
 
-export const Filter = ({ filter, onChange }) => {
-  const handleChange = e => {
-    onChange(e.target.value.toLowerCase());
-  };
+export const Filter = () => {
+
+  const dispatch = useDispatch();
+  const filter = useSelector(getFilter);
+
   return (
     <div className={css.searchBox}>
       <label className={css.searchicon}>
@@ -15,14 +18,9 @@ export const Filter = ({ filter, onChange }) => {
           className={css.searchInput}
           type="text"
           value={filter}
-          onChange={handleChange}
+          onChange={event => dispatch(setFilter(event.target.value.trim()))}
         />
       
     </div>
   );
-};
-
-Filter.propTypes = {
-  filter: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
 };

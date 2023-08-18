@@ -1,5 +1,5 @@
 import { ContactForm } from './ContactForm/ContactForm';
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 
@@ -12,57 +12,51 @@ import { Filter } from './Filter/Filter';
 // ];
 
 export const App = () => {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
+  // const [contacts, setContacts] = useState([]);
+  // const [filter, setFilter] = useState('');
  
-  useEffect(() => {
-    const storedContacts = localStorage.getItem('contacts');
-    if (storedContacts) {
-      setContacts(JSON.parse(storedContacts));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedContacts = localStorage.getItem('contacts');
+  //   if (storedContacts) {
+  //     setContacts(JSON.parse(storedContacts));
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+  // useEffect(() => {
+  //   localStorage.setItem('contacts', JSON.stringify(contacts));
+  // }, [contacts]);
 
-  const handleAddNewContact = newContact => {
+  // const handleAddNewContact = newContact => {
 
-    if (contacts.find(contact => contact.name === newContact.name)) {
-      alert(`${newContact.name} is already in contacts`);
-      return;
-    } else {
-    setContacts(prevState => [...prevState, newContact]);
-  }};
+  //   if (contacts.find(contact => contact.name === newContact.name)) {
+  //     alert(`${newContact.name} is already in contacts`);
+  //     return;
+  //   } else {
+  //   setContacts(prevState => [...prevState, newContact]);
+  // }};
 
-  const inputFilter = ({ target }) => setFilter(target.value);
+  // const inputFilter = ({ target }) => setFilter(target.value);
 
-  const onDeleteContact = id => {
-    setContacts(prevState => prevState.filter(e => e.id !== id));
-  };
+  // const onDeleteContact = id => {
+  //   setContacts(prevState => prevState.filter(e => e.id !== id));
+  // };
 
-  const getFilteredContacts = () =>
-    contacts.filter(({ name }) =>
-      name.toLowerCase().includes(filter.toLowerCase())
-    );
+  // const getFilteredContacts = () =>
+  //   contacts.filter(({ name }) =>
+  //     name.toLowerCase().includes(filter.toLowerCase())
+  //   );
 
-    const filteredContacts = getFilteredContacts();
+  //   const filteredContacts = getFilteredContacts();
    
 
   return (
     <div>
       <h1>Phonebook</h1>
-      <ContactForm onFormSubmit={handleAddNewContact} />
+      <ContactForm />
 
       <h2>Contacts</h2>
-      <Filter filter={filter} onChange={inputFilter} />
-      {contacts.length > 0 && (
-        <ContactList
-          contacts={filteredContacts}
-          onDeleteContact={onDeleteContact}
-        />
-      )}
-      {contacts.length === 0 && <p>There is no names yet</p>}
+      <Filter />
+      <ContactList/>
     </div>
   );
 };
