@@ -2,6 +2,7 @@ import { ContactForm } from './ContactForm/ContactForm';
 // import { useState, useEffect } from 'react';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
+import { ToastContainer } from 'react-toastify';
 
 // const CONTACTS_LS_KEY = 'contacts';
 // const initialContacts = [
@@ -51,6 +52,7 @@ export const App = () => {
 
   return (
     <div>
+      <ToastContainer />
       <h1>Phonebook</h1>
       <ContactForm />
 
