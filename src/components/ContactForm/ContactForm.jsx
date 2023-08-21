@@ -1,11 +1,10 @@
-
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import css from './ContactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contactsSlice';
 import { getContacts } from 'redux/selectors';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const ContactForm = () => {
@@ -16,80 +15,49 @@ export const ContactForm = () => {
   const contacts = useSelector(getContacts);
 
   const handleSubmitContact = e => {
-     e.preventDefault();
+    e.preventDefault();
 
-     if (contacts.some(({ name }) => name === contactName)) {
-      return toast.warn(`${contactName} is already in your contacts`);
-    
-    }
-    dispatch(
-      addContact({
-        name: contactName,
-        number,
-        id: nanoid(),
-      })
+
+    const isInContacts = contacts.find(
+      ({ name }) => name.toLowerCase() === contactName.toLowerCase()
     );
 
-    setContactName('');
-    setNumber('');
+    if (isInContacts) {
+      return toast.warn(`${contactName} is already in your contacts`);
+    }
+    const newContact = {
+      id: nanoid(),
+      name: contactName,
+      number,
+    };
+    const reset = () => {
+      setContactName('');
+      setNumber('');
+    };
 
-
-    // const isInContacts = contacts.some(
-    //   ({ name }) => name.toLowerCase() === values.name.toLowerCase()
-    // );
-
-    // if (isInContacts) {
-    //   return toast.warn(`${values.name} is already in contacts.`);
-    // }
-
-    // dispatch(addContact(values));
-    // action.resetForm();
-
-   
-
-    // const form = e.target;
-
-    // const name = form.name.value.trim();
-    // const number = form.number.value.trim();
-  
-
-  //   const newContact = {
-  //     id: nanoid(),
-  //     name,
-  //     number,
-  //   };
-
-    
-  //   dispatch(addContact(newContact));
-  //   reset();
-    
-  // };
-
-  // const reset = () => {
-  //   setName('');
-  //   setNumber('');
+    dispatch(addContact(newContact));
+    reset();
   };
 
-  const handleChange = (e) => {
-    const {value, name}  = e.target;
+  const handleChange = e => {
+    const { value, name } = e.target;
 
     switch (name) {
       case 'name':
-        setContactName(value)
+        setContactName(value.trim());
         break;
-    
-        case 'number':
-        setNumber(value)
+
+      case 'number':
+        setNumber(value.trim());
         break;
 
       default:
         return;
     }
   };
- 
 
   return (
-    <form className={css.formBox}  onSubmit={handleSubmitContact}>
+    <form className={css.formBox} onSubmit={handleSubmitContact}>
       <div className={css.formInputBox}>
         <label className={css.formInputTxt}>
           Name
@@ -128,5 +96,3 @@ export const ContactForm = () => {
     </form>
   );
 };
-
-
